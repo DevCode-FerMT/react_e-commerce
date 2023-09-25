@@ -4,6 +4,7 @@ import { Header } from './components/Header'
 import { useFilters } from './hooks/useFilters'
 import { Footer } from './components/Footer'
 import { IS_DEVELOPMENT } from './config'
+import { Cart } from './components/Cart.jsx'
 
 function App() {
   const { filterProducts } = useFilters()
@@ -12,6 +13,7 @@ function App() {
   return (
     <>
       <Header />
+      <Cart />
       <Prdocuts products={filteredProducts} />
       {IS_DEVELOPMENT && <Footer />}
     </>
