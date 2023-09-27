@@ -1,9 +1,14 @@
-export const cartInitialState = []
+export const cartInitialState = JSON.parse(window.localStorage.getItem('cart')) || []
 
 const actions = {
   add_to_cart: 'ADD_TO_CART',
   remove_from_cart: 'REMOVE_FROM_CART',
   clear_cart: 'CLEAR_CART'
+}
+
+// update localStorage with state for cart
+export const updateLocalStorage = (state) => {
+  window.localStorage.setItem('cart', JSON.stringify(state))
 }
 
 export const cartReducer = (state, action) => {
@@ -16,18 +21,25 @@ export const cartReducer = (state, action) => {
       if (productInCartIndex >= 0) {
         const newState = structuredClone(state)
         newState[productInCartIndex].quantity += 1
+        updateLocalStorage(newState)
         return newState
       }
 
-      return [...state, { ...actionPayload, quantity: 1 }]
+      const newState = [...state, { ...actionPayload, quantity: 1 }]
+
+      updateLocalStorage(newState)
+      return newState
     }
 
     case actions.remove_from_cart: {
       const { id } = actionPayload
-      return state.filter((item) => item.id !== id)
+      const newState = state.filter((item) => item.id !== id)
+      updateLocalStorage(newState)
+      return newState
     }
 
     case actions.clear_cart: {
+      updateLocalStorage(cartInitialState)
       return cartInitialState
     }
   }
