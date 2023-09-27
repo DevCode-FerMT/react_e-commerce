@@ -1,5 +1,6 @@
 {
   "spaceBeforeFunctionParen": true,
+  "arrowParens": "always",
   "semi": false,
   "singleQuote": true,
   "jsxSingleQuote": true,
